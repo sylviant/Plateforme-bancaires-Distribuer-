@@ -1,0 +1,112 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueConfigServiceApplication<banque-config-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_config_service.BanqueConfigServiceApplication",
+            "projectName": "banque-config-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=36351 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-config-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueRegistryServiceApplication<banque-registry-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_registry_service.BanqueRegistryServiceApplication",
+            "projectName": "banque-registry-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=38089 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-registry-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueUserServiceApplication<banque-user-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_user_service.BanqueUserServiceApplication",
+            "projectName": "banque-user-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=44573 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-user-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueProxyServiceApplication<banque-proxy-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_proxy_service.BanqueProxyServiceApplication",
+            "projectName": "banque-proxy-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=39585 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-proxy-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceCompteFinancierApplication<banque-service-compte-financier>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_service_compte_financier.BanqueServiceCompteFinancierApplication",
+            "projectName": "banque-service-compte-financier",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=40967 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-service-compte-financier"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceTransactionApplication<banque-service-transaction>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_transaction.BanqueServiceTransactionApplication",
+            "projectName": "banque-service-transaction",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=39367 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-service-transaction"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceNotificationApplication<com.banquesysteme-banque-user-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_notification.BanqueServiceNotificationApplication",
+            "projectName": "com.banquesysteme-banque-user-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=44135 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=com.banquesysteme-banque-user-service"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceAnalysedocumentApplication<banque-service-analysedocument>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_analysedocument.BanqueServiceAnalysedocumentApplication",
+            "projectName": "banque-service-analysedocument",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=42765 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-service-analysedocument"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceDemandepretApplication<banque-service-demandepret>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_service_demandepret.BanqueServiceDemandepretApplication",
+            "projectName": "banque-service-demandepret",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceJournalauditApplication<banque-service-journalaudit>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_journalaudit.BanqueServiceJournalauditApplication",
+            "projectName": "banque-service-journalaudit",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
