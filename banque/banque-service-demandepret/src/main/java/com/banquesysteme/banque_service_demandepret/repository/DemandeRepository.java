@@ -9,6 +9,6 @@ import com.banquesysteme.banque_service_demandepret.model.DemandePret;
 
 // @RestResource(path = "clients")
 @Repository
-public interface UserRepository extends JpaRepository<DemandePret, Integer>{
+public interface DemandeRepository extends JpaRepository<DemandePret, Integer>{
 
 }

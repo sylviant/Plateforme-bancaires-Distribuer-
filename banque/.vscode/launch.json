@@ -96,7 +96,8 @@
             "mainClass": "com.banquesysteme.banque_service_demandepret.BanqueServiceDemandepretApplication",
             "projectName": "banque-service-demandepret",
             "args": "",
-            "envFile": "${workspaceFolder}/.env"
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=42753 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-service-demandepret"
         },
         {
             "type": "java",
@@ -105,6 +106,17 @@
             "cwd": "${workspaceFolder}",
             "mainClass": "com.banque.banque_service_journalaudit.BanqueServiceJournalauditApplication",
             "projectName": "banque-service-journalaudit",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env",
+            "vmArgs": " -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.port=36795 -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Dspring.jmx.enabled=true -Djava.rmi.server.hostname=localhost -Dspring.application.admin.enabled=true -Dspring.boot.project.name=banque-service-journalaudit"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceNotificationApplication<banque-service-notification>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_notification.BanqueServiceNotificationApplication",
+            "projectName": "banque-service-notification",
             "args": "",
             "envFile": "${workspaceFolder}/.env"
         }

@@ -104,8 +104,10 @@ export default function App() {
         nom: regForm.nom,
         motDePasseChiffre: regForm.motDePasseChiffre,
         role: regForm.role, 
+      //  role: "ADMIN",
         dateNaissance: regForm.dateNaissance,
         email: regForm.email,
+      //  status:  'oui',
         status: regForm.role === 'client' ? 'non' : 'oui',
         //  Envoi des paramètres de compte choisis vers le microservice
         typeCompte: regForm.role === 'client' ? regForm.typeCompte : null,
@@ -157,8 +159,11 @@ export default function App() {
         setCurrentRole('ADMIN');
       } else if (userRole === 'OPERATOR' || userRole === 'GESTIONNAIRE') {
         setCurrentRole('OPERATOR');
-      } else {
+      }else if (userRole === 'CLIENT') {
         setCurrentRole('CLIENT');
+      }
+      else  {
+        setCurrentRole('Accueil');
       }
 
       Swal.fire({
@@ -241,7 +246,7 @@ export default function App() {
         )}
       </main>
 
-      {/* 🔴 Pied de page structuré */}
+      {/* Pied de page structuré */}
       <footer style={{ backgroundColor: '#0f172a', color: '#94a3b8', padding: '25px 20px', textAlign: 'center', fontSize: '12px', marginTop: 'auto', borderTop: '4px solid #0ea5e9' }}>
         <div style={{ marginBottom: '8px', fontWeight: 'bold', color: '#f8fafc' }}>ECOBANK SYSTÈME BANCAIRE DISTRIBUÉ MICROSERVICES</div>
         <div>© 2026 Architecture Logicielle INF462 — Université de Yaoundé I. Tous droits réservés.</div>
@@ -252,7 +257,7 @@ export default function App() {
       {isLoginOpen && (
         <div style={modalOverlayStyle} onClick={() => setIsLoginOpen(false)}>
           <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
-            <h3 style={{ margin: '0 0 15px 0' }}>🔒 Connexion</h3>
+            <h3 style={{ margin: '0 0 15px 0' }}> Connexion</h3>
             <form onSubmit={handleLoginSubmit}>
               <div style={{ marginBottom: '12px' }}>
                 <label style={{ fontSize: '14px', fontWeight: 'bold' }}>Identifiant (Username)</label>
@@ -276,7 +281,7 @@ export default function App() {
         <div style={modalOverlayStyle} onClick={() => setIsRegisterOpen(false)}>
           <div style={modalContentStyle} onClick={(e) => e.stopPropagation()}>
             <h3 style={{ margin: '0 0 15px 0' }}>
-              {regForm.role === 'operator' ? '➕ Ajouter un Nouvel Opérateur' : '📝 Ouverture de Compte Client'}
+              {regForm.role === 'operator' ? ' Ajouter un Nouvel Opérateur' : ' Ouverture de Compte Client'}
             </h3>
             <form onSubmit={handleRegisterSubmit}>
               <div style={{ marginBottom: '10px' }}>
@@ -300,7 +305,7 @@ export default function App() {
                 <input type="date" required value={regForm.dateNaissance} onChange={e => setRegForm({...regForm, dateNaissance: e.target.value})} style={inputStyle} />
               </div>
               
-              {/* 🔴 CONDITION : On n'affiche le choix de l'opérateur et du type de compte QUE pour les clients */}
+              {/*  CONDITION : On n'affiche le choix de l'opérateur et du type de compte QUE pour les clients */}
               {regForm.role === 'client' && (
                 <>
                   <div style={{ marginBottom: '10px' }}>
@@ -429,7 +434,7 @@ export default function App() {
   
 //   // États d'authentification
 //   const [isLoggedIn, setIsLoggedIn] = useState(false);
-//   const [authenticatedRole, setAuthenticatedRole] = useState(''); // 🔴 Stocke le vrai rôle de l'utilisateur connecté
+//   const [authenticatedRole, setAuthenticatedRole] = useState(''); //  Stocke le vrai rôle de l'utilisateur connecté
 
 //   const [loginForm, setLoginForm] = useState({ username: '', password: '' });
 //   const [regForm, setRegForm] = useState({ prenom: '', nom: '', email: '', motDePasseChiffre: '', dateNaissance: '', role: 'client' });

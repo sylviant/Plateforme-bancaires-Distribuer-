@@ -12,9 +12,10 @@ public class Notification {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idNotification;
-    private String idUtilisateur;
+    private Long idUtilisateur;
     private String type;
     private String message;
     private String dateEnvoi;
 
 }
+

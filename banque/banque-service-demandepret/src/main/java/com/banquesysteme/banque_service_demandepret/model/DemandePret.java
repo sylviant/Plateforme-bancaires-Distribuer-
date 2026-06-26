@@ -13,11 +13,11 @@ public class DemandePret {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int idPret;
-    private String idClient;
-    private String montantDemande;
+    private Long idClient;
+    private float montantDemande;
     private String statut;
     private String dateEcheance;
-    private String montantEcheance;
+    private float montantEcheance;
     private String estPaye;
 
 }

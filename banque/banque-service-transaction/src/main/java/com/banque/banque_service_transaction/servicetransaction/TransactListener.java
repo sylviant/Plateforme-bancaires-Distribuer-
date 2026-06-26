@@ -1,19 +1,20 @@
-package com.banquesysteme.banque_service_compte_financier.service;
+package com.banque.banque_service_transaction.servicetransaction;
 
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import com.banquesysteme.banque_service_compte_financier.model.Compte;
-import com.banquesysteme.banque_service_compte_financier.repository.RepoCompteFinancier;
-import com.banquesysteme.banque_service_compte_financier.service.CompteListener.UserValidatedPayload;
-//import com.banquesysteme.banque_service_compte_financier.service.CompteListener.UserDto;
+
+import com.banque.banque_service_transaction.model.Transaction;
+import com.banque.banque_service_transaction.repository.TransactionRepository;
+//import com.banquesysteme.banque_service_compte_financier.model.Compte;
+//import com.banquesysteme.banque_service_compte_financier.repository.RepoCompteFinancier;
 
 @Component
 // J'ai enlevé @RequiredArgsConstructor car l'injection par @Autowired sur le champ ou via constructeur est plus sûre ici
-public class CompteListener {
+public class TransactListener {
 
     @Autowired // TRÈS IMPORTANT : Il manquait cette annotation, sinon compteRepository vaut null !
-    private RepoCompteFinancier compteRepository;
+    private TransactionRepository transactionRepository;
 
     // Classe interne pour mapper le JSON entrant
     // 💡 Astuce : Ajoute des Getters/Setters ou rends les champs bien publics (comme tu as fait)
@@ -38,82 +39,74 @@ public class CompteListener {
 
 
 
-    public static class UserValidatedPayload {
-        private Long iuser; //  Doit s'appeler iuser (en minuscules) pour correspondre au JSON !
-        private String typeCompte;
-        private String idOperateur;
-        private String nom;
-        private String dateNaissance;
-        public Long getIuser() {
-            return iuser;
-        }
-        public void setIuser(Long iuser) {
-            this.iuser = iuser;
-        }
-        public String getTypeCompte() {
-            return typeCompte;
-        }
-        public void setTypeCompte(String typeCompte) {
-            this.typeCompte = typeCompte;
-        }
-        public String getIdOperateur() {
-            return idOperateur;
-        }
-        public void setIdOperateur(String idOperateur) {
-            this.idOperateur = idOperateur;
-        }
-        public String getNom() {
-            return nom;
-        }
-        public void setNom(String nom) {
-            this.nom = nom;
-        }
-        public String getDateNaissance() {
-            return dateNaissance;
-        }
-        public void setDateNaissance(String dateNaissance) {
-            this.dateNaissance = dateNaissance;
-        }
+    public static class transactionValidatedPayload {
+            private String type;
+            private double montant;
+            private String idCompteSource;
+            private String idCompteDestination;
+            private String dateCreation;
+
+            public String getType() {
+                return type;
+            }
+            public void setType(String type) {
+                this.type = type;
+            }
+            public double getMontant() {
+                return montant;
+            }
+            public void setMontant(double montant) {
+                this.montant = montant;
+            }
+            public String getIdCompteSource() {
+                return idCompteSource;
+            }
+            public void setIdCompteSource(String idCompteSource) {
+                this.idCompteSource = idCompteSource;
+            }
+            public String getIdCompteDestination() {
+                return idCompteDestination;
+            }
+            public void setIdCompteDestination(String idCompteDestination) {
+                this.idCompteDestination = idCompteDestination;
+            }
+            public String getDateCreation() {
+                return dateCreation;
+            }
+            public void setDateCreation(String dateCreation) {
+                this.dateCreation = dateCreation;
+            }
+        
 
     }
 
-    @RabbitListener(queues = "queue-compte")
-    public void handleUserActivation(UserValidatedPayload payload) {
+    @RabbitListener(queues = "queue-transaction")
+    public void handleUserActivation(transactionValidatedPayload payload) {
         // Sécurité au cas où le payload arriverait vide
-        if (payload == null || payload.getNom() == null) {
+        if (payload == null || payload.getIdCompteDestination() == null) {
             System.err.println("[RABBITMQ] Erreur : Le payload reçu est vide ou incomplet.");
             return;
         }
 
-        System.out.println("[RABBITMQ] Message intercepté pour l'utilisateur : " + payload.getNom());
+        System.out.println("[RABBITMQ] Message intercepté pour transaction : " + payload.getIdCompteDestination());
 
         try {
             // 1. Initialisation de l'entité de compte bancaire
-
-            if (payload.getDateNaissance().equals("EPARGNE") || payload.getDateNaissance().equals("COURANT")) {
-                    Compte nouveauCompte = new Compte();
-                    String uniqueSuffix = String.valueOf((int)(Math.random() * 89999) + 10000);
-                    nouveauCompte.setIdclient(payload.getIuser());
-                    nouveauCompte.setNumeroCompte("CM-ECO-" + payload.getIdOperateur().toUpperCase() + "-" + uniqueSuffix);
-                    nouveauCompte.setSolde(5000.0); // Solde de bienvenue
-                    nouveauCompte.setIdOperateur(payload.getTypeCompte());
-                    nouveauCompte.setTypeCompte(payload.getDateNaissance());
-                    nouveauCompte.setDevise("FCFA");
-                    nouveauCompte.setDate(payload.getNom());
+            Transaction nouveautTransaction = new Transaction();
+            
+            nouveautTransaction.setType(payload.getType());
+            nouveautTransaction.setIdCompteSource(payload.getIdCompteSource());
+            nouveautTransaction.setIdCompteDestination(payload.getIdCompteDestination());
+            nouveautTransaction.setDateCreation(payload.getDateCreation());
+            nouveautTransaction.setMontant(payload.getMontant());
 
 
-                    // 2. Sauvegarde concrète en base de données
-                    Compte compteEnregistre = compteRepository.save(nouveauCompte);
-            }
 
+            // 2. Sauvegarde concrète en base de données
+            Transaction compteEnregistre = transactionRepository.save(nouveautTransaction);
 
-            System.out.println("payload.getIuser()"+payload.getIuser());
-            System.out.println("payload.getNom()."+payload.getNom());
-            System.out.println("payload.getIdOperateur()"+payload.getIdOperateur());
-            System.out.println("payload.getIdOperateur()"+payload.getIdOperateur());
-            System.out.println("payload.getTypeCompte()."+payload.getTypeCompte());
-            System.out.println("payload.getDateNaissance()."+payload.getDateNaissance());
-          //  System.out.println("Compte ID: " + compteEnregistre.getIdCompte() + " | N°: " + compteEnregistre.getNumeroCompte());
+            System.out.println("+++ payload.getMontant());+++" +payload.getMontant());
+
             
         } catch (Exception e) {
             System.err.println("[ERREUR BDD            nouveauCompte.setIdCompte(payload.getId());] Impossible de sauvegarder le compte : " + e.getMessage());

@@ -25,9 +25,26 @@ public class Compte {
     private String devise;
     private Long idclient;
     private String date;
+    public Compte(Long idCompte, String numeroCompte, Double solde, String idOperateur, String typeCompte,
+            String devise, Long idclient, String date) {
+        this.idCompte = idCompte;
+        this.numeroCompte = numeroCompte;
+        this.solde = solde;
+        this.idOperateur = idOperateur;
+        this.typeCompte = typeCompte;
+        this.devise = devise;
+        this.idclient = idclient;
+        this.date = date;
+    }
+    public Compte() {
+    }
+
+    
 
     // Pas besoin de Persistable, pas besoin de isNew, pas besoin de surcharger getId()
 }
+
+
 
 
 // package com.banquesysteme.banque_service_compte_financier.model;

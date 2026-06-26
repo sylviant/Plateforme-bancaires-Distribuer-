@@ -76,4 +76,9 @@ public class ControllerUser {
         System.out.print("controler connexion "+connexion);
         return ResponseEntity.ok(sUserService.connexion(connexion));
     }
+
+    @GetMapping("/infoconnecter")
+    public ResponseEntity<User> infosconnecter() {
+        return ResponseEntity.ok(sUserService.getUser());
+    }
 }

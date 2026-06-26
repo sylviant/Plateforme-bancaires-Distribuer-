@@ -51,6 +51,15 @@ public class UserDto implements Serializable {
         this.dateNaissance = dateNaissance;
     }
 
+    // public UserDto(Long iUser, String nom, String prenom, String email, String dateNaissance, String status) {
+    //     this.iUser = iUser;
+    //     this.nom = nom;
+    //     this.prenom = prenom;
+    //     this.email = email;
+    //     this.dateNaissance = dateNaissance;
+    //     this.status = status;
+    // }
+
     public UserDto() {
     }
 

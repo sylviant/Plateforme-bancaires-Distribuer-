@@ -5,6 +5,8 @@ import org.springframework.data.rest.core.annotation.RestResource;
 import org.springframework.stereotype.Repository;
 
 import com.banquesysteme.banque_user_service.model.User;
+import java.util.List;
+
 
 
 // @RestResource(path = "clients")
@@ -12,5 +14,6 @@ import com.banquesysteme.banque_user_service.model.User;
 @RestResource(path = "users")
 //@RestResource(path = "clients")
 public interface UserRepository extends JpaRepository<User, Long>{
+     User findByNom(String nom);
 
 }
