@@ -1,0 +1,278 @@
+version: '3.8'
+
+services:
+
+  # =========================================================================
+  # 1. BASES DE DONNÉES & MIDDLEWARES
+  # =========================================================================
+  
+  # Base de données MySQL commune pour tous les schémas bancaires
+  bank-mysql:
+    image: mysql:8.0
+    container_name: bank-mysql
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Script pour initialiser automatiquement toutes tes bases de données au premier lancement
+      - ./init-db:/docker-entrypoint-initdb.d
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # Broker de messages RabbitMQ requis pour tes notifications et services
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: banque-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - microservices-network
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # =========================================================================
+  # 2. SERVICES INFRASTRUCTURES SPRING CLOUD
+  # =========================================================================
+
+  # Serveur de Configuration Centralisé (Port 8080)
+  banque-config-service:
+    build: ./banque-config-service
+    container_name: banque-config-service
+    ports:
+      - "8000:8000"
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/actuator/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    environment:
+      - SPRING_APPLICATION_NAME=banque-config-service
+      - SPRING_CLOUD_CONFIG_SERVER_GIT_URI=https://github.com/hassanbadama/config-server-m1-pro.git
+    networks:
+      - microservices-network
+
+  # Serveur de Registre Eureka (Port externe 8081 -> interne 8761)
+  banque-registry-service:
+    build: ./banque-registry-service
+    container_name: banque-registry-service
+    ports:
+      - "8761:8761"
+    depends_on:
+      - banque-config-service
+   # command: ["./wait-for-it.sh", "service-config:8080", "--strict", "--timeout=300", "java", "-jar", "service-register.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-registry-service
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+    networks:
+      - microservices-network
+
+  # API Gateway (Port 8079)
+  # banque-proxy-service:
+  #   build: ./banque-proxy-service
+  #   container_name: banque-proxy-service
+  #   ports:
+  #     - "8079:8079"
+  #   depends_on:
+  #     - banque-registry-service
+  #     - banque-config-service
+  #  # command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-proxy-service.jar"]
+  #   environment:
+  #     - SPRING_APPLICATION_NAME=banque-proxy-service
+  #     - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000fichier generer est comme ca banque-service-journalaudit-0.0.1-SNAPSHOT
+  #     - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+  #     - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+  #   networks:
+  #     - microservices-network
+  # API Gateway (Port 8079)
+  banque-proxy-service:
+    build: ./banque-proxy-service
+    container_name: banque-proxy-service
+    ports:
+      - "8079:8079"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+    environment:
+      - SPRING_APPLICATION_NAME=banque-proxy-service
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+    networks:
+      - microservices-network
+
+  # =========================================================================
+  # 3. TES 7 MICROSERVICES APPLICATIFS (METIERS)
+  # =========================================================================
+
+  # Microservice Utilisateur (Port 8083)
+  banque-user-service:
+    build: ./banque-user-service
+    container_name: banque-user-service
+    ports:
+      - "8083:8083"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+    #command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-user-service.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-user-service
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_user_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Compte Financier (Port 8084)
+  banque-service-compte-financier:
+    build: ./banque-service-compte-financier
+    container_name: banque-service-compte-financier
+    ports:
+      - "8084:8084"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+  #  command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-compte-financier.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-compte-financier
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_compte_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Transaction (Port 8085)
+  banque-service-transaction:
+    build: ./banque-service-transaction
+    container_name: banque-service-transaction
+    ports:
+      - "8085:8085"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+   # command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-transaction.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-transaction
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_transaction_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Notification (Port 8086)
+  banque-service-notification:
+    build: ./banque-service-notification
+    container_name: banque-service-notification
+    ports:
+      - "8086:8086"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+   # command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-notification.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-notification
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_notifier_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Analyse Document (Port 8087)
+  banque-service-analysedocument:
+    build: ./banque-service-analysedocument
+    container_name: banque-service-analysedocument
+    ports:
+      - "8087:8087"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+   # command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-analysedocument.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-analysedocument
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_analyse_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Demande Prêt (Port 8088)
+  banque-service-demandepret:
+    build: ./banque-service-demandepret
+    container_name: banque-service-demandepret
+    ports:
+      - "8088:8088"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+  #  command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-demandepret.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-demandepret
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_demandepret_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+  # Microservice Journal d'Audit (Port 8089)
+  banque-service-journalaudit:
+    build: ./banque-service-journalaudit
+    container_name: banque-service-journalaudit
+    ports:
+      - "8089:8089"
+    depends_on:
+      - banque-registry-service
+      - banque-config-service
+      - bank-mysql
+      - rabbitmq
+  #  command: ["./wait-for-it.sh", "banque-registry-service:8761", "--strict", "--timeout=300", "java", "-jar", "banque-service-journalaudit.jar"]
+    environment:
+      - SPRING_APPLICATION_NAME=banque-service-journalaudit
+      - SPRING_CLOUD_CONFIG_URI=http://banque-config-service:8000
+      - SPRING_CONFIG_IMPORT=configserver:http://banque-config-service:8000
+      - EUREKA_CLIENT_SERVICE-URL_DEFAULTZONE=http://banque-registry-service:8761/eureka/
+      - SPRING_DATASOURCE_URL=jdbc:mysql://bank-mysql:3306/bank_journalaudit_db?createDatabaseIfNotExist=true&useSSL=false&serverTimezone=UTC
+      - SPRING_RABBITMQ_HOST=rabbitmq
+    networks:
+      - microservices-network
+
+volumes:
+  mysql_data:
+
+networks:
+  microservices-network:
+    driver: bridge

@@ -95,7 +95,7 @@ public class CompteListener {
                     String uniqueSuffix = String.valueOf((int)(Math.random() * 89999) + 10000);
                     nouveauCompte.setIdclient(payload.getIuser());
                     nouveauCompte.setNumeroCompte("CM-ECO-" + payload.getIdOperateur().toUpperCase() + "-" + uniqueSuffix);
-                    nouveauCompte.setSolde(5000.0); // Solde de bienvenue
+                    nouveauCompte.setSolde(0.0); // Solde de bienvenue
                     nouveauCompte.setIdOperateur(payload.getTypeCompte());
                     nouveauCompte.setTypeCompte(payload.getDateNaissance());
                     nouveauCompte.setDevise("FCFA");

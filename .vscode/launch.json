@@ -1,0 +1,74 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueRegistryServiceApplication<banque-registry-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_registry_service.BanqueRegistryServiceApplication",
+            "projectName": "banque-registry-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueProxyServiceApplication<banque-proxy-service>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_proxy_service.BanqueProxyServiceApplication",
+            "projectName": "banque-proxy-service",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceAnalysedocumentApplication<banque-service-analysedocument>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_analysedocument.BanqueServiceAnalysedocumentApplication",
+            "projectName": "banque-service-analysedocument",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceCompteFinancierApplication<banque-service-compte-financier>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_service_compte_financier.BanqueServiceCompteFinancierApplication",
+            "projectName": "banque-service-compte-financier",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceDemandepretApplication<banque-service-demandepret>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banquesysteme.banque_service_demandepret.BanqueServiceDemandepretApplication",
+            "projectName": "banque-service-demandepret",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceJournalauditApplication<banque-service-journalaudit>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_journalaudit.BanqueServiceJournalauditApplication",
+            "projectName": "banque-service-journalaudit",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        },
+        {
+            "type": "java",
+            "name": "Spring Boot-BanqueServiceNotificationApplication<banque-service-notification>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.banque.banque_service_notification.BanqueServiceNotificationApplication",
+            "projectName": "banque-service-notification",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

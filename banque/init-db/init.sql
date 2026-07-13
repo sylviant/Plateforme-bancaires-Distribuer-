@@ -1,0 +1,7 @@
+CREATE DATABASE IF NOT EXISTS bank_user_db;
+CREATE DATABASE IF NOT EXISTS bank_compte_db;
+CREATE DATABASE IF NOT EXISTS bank_transaction_db;
+CREATE DATABASE IF NOT EXISTS bank_notifier_db;
+CREATE DATABASE IF NOT EXISTS bank_analyse_db;
+CREATE DATABASE IF NOT EXISTS bank_demandepret_db;
+CREATE DATABASE IF NOT EXISTS bank_journalaudit_db;

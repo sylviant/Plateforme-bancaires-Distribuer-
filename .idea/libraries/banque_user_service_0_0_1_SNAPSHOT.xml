@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="banque-user-service-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/banque/banque-user-service/target/banque-user-service-0.0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

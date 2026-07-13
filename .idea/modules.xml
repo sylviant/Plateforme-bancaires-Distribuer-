@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/BankIn462.iml" filepath="$PROJECT_DIR$/.idea/BankIn462.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-user-service/src/main/main.iml" filepath="$PROJECT_DIR$/banque/banque-user-service/src/main/main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-registry-service/src/main/main10.iml" filepath="$PROJECT_DIR$/banque/banque-registry-service/src/main/main10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-demandepret/src/main/main2.iml" filepath="$PROJECT_DIR$/banque/banque-service-demandepret/src/main/main2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-proxy-service/src/main/main3.iml" filepath="$PROJECT_DIR$/banque/banque-proxy-service/src/main/main3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-analysedocument/src/main/main4.iml" filepath="$PROJECT_DIR$/banque/banque-service-analysedocument/src/main/main4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-notification/src/main/main5.iml" filepath="$PROJECT_DIR$/banque/banque-service-notification/src/main/main5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-compte-financier/src/main/main6.iml" filepath="$PROJECT_DIR$/banque/banque-service-compte-financier/src/main/main6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-journalaudit/src/main/main7.iml" filepath="$PROJECT_DIR$/banque/banque-service-journalaudit/src/main/main7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-config-service/src/main/main8.iml" filepath="$PROJECT_DIR$/banque/banque-config-service/src/main/main8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-transaction/src/main/main9.iml" filepath="$PROJECT_DIR$/banque/banque-service-transaction/src/main/main9.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-journalaudit/src/test/test.iml" filepath="$PROJECT_DIR$/banque/banque-service-journalaudit/src/test/test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-registry-service/src/test/test10.iml" filepath="$PROJECT_DIR$/banque/banque-registry-service/src/test/test10.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-notification/src/test/test2.iml" filepath="$PROJECT_DIR$/banque/banque-service-notification/src/test/test2.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-compte-financier/src/test/test3.iml" filepath="$PROJECT_DIR$/banque/banque-service-compte-financier/src/test/test3.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-demandepret/src/test/test4.iml" filepath="$PROJECT_DIR$/banque/banque-service-demandepret/src/test/test4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-proxy-service/src/test/test5.iml" filepath="$PROJECT_DIR$/banque/banque-proxy-service/src/test/test5.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-analysedocument/src/test/test6.iml" filepath="$PROJECT_DIR$/banque/banque-service-analysedocument/src/test/test6.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-service-transaction/src/test/test7.iml" filepath="$PROJECT_DIR$/banque/banque-service-transaction/src/test/test7.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-config-service/src/test/test8.iml" filepath="$PROJECT_DIR$/banque/banque-config-service/src/test/test8.iml" />
+      <module fileurl="file://$PROJECT_DIR$/banque/banque-user-service/src/test/test9.iml" filepath="$PROJECT_DIR$/banque/banque-user-service/src/test/test9.iml" />
+    </modules>
+  </component>
+</project>

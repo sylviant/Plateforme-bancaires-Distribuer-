@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="banque-config-service">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/banque/banque-config-service/target/banque-config-service.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

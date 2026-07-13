@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="banque-registry-service-0.0.1-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/banque/banque-registry-service/target/banque-registry-service-0.0.1-SNAPSHOT.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

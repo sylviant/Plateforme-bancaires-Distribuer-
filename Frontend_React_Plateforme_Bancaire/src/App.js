@@ -104,10 +104,10 @@ export default function App() {
         nom: regForm.nom,
         motDePasseChiffre: regForm.motDePasseChiffre,
         role: regForm.role, 
-      //  role: "ADMIN",
+        //role: "OPERATOR",
         dateNaissance: regForm.dateNaissance,
         email: regForm.email,
-      //  status:  'oui',
+       // status:  'oui',
         status: regForm.role === 'client' ? 'non' : 'oui',
         //  Envoi des paramètres de compte choisis vers le microservice
         typeCompte: regForm.role === 'client' ? regForm.typeCompte : null,

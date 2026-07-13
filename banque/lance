@@ -1,1 +1,6 @@
 sudo /opt/lampp/lampp start
+
+
+docker-compose up --build
+
+sudo /opt/lampp/lampp stopmysql
